@@ -1,0 +1,117 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "ansible@latest": {
+      "last_modified": "2025-01-15T12:23:19Z",
+      "resolved": "github:NixOS/nixpkgs/ae2fb9f1fb5fcf17fb59f25c2a881c170c501d6f#ansible",
+      "source": "devbox-search",
+      "version": "2.18.1",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/r8viz1g2jns0kbs6jbb2nbmyfwq5a6pc-python3.12-ansible-core-2.18.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/6xssqmn60qjs69glqn9c319wh20l8wbb-python3.12-ansible-core-2.18.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/r8viz1g2jns0kbs6jbb2nbmyfwq5a6pc-python3.12-ansible-core-2.18.1"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/sy7gms5ijdhh1ws30xfrr6b00yxqaldf-python3.12-ansible-core-2.18.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/2y2fa6f0rp996qsxaf0jl6r08jy3jwic-python3.12-ansible-core-2.18.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/sy7gms5ijdhh1ws30xfrr6b00yxqaldf-python3.12-ansible-core-2.18.1"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gnlna7nzj8jvf3jpk2rk9dmarzi8l604-python3.12-ansible-core-2.18.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/nvvv5azi3sy3d538f1pffnx8h8ddp564-python3.12-ansible-core-2.18.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/gnlna7nzj8jvf3jpk2rk9dmarzi8l604-python3.12-ansible-core-2.18.1"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/wdh4w7i2bd7v31qfki9kdkh1p4crpfw3-python3.12-ansible-core-2.18.1",
+              "default": true
+            },
+            {
+              "name": "dist",
+              "path": "/nix/store/lscbmck2yf0icw8hswibpwj7isqplj6m-python3.12-ansible-core-2.18.1-dist"
+            }
+          ],
+          "store_path": "/nix/store/wdh4w7i2bd7v31qfki9kdkh1p4crpfw3-python3.12-ansible-core-2.18.1"
+        }
+      }
+    },
+    "sshpass@latest": {
+      "last_modified": "2024-12-23T21:10:33Z",
+      "resolved": "github:NixOS/nixpkgs/de1864217bfa9b5845f465e771e0ecb48b30e02d#sshpass",
+      "source": "devbox-search",
+      "version": "1.10",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/8cww4cyicyb0pwn9wi6zdjrkdbm5bsr6-sshpass-1.10",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/8cww4cyicyb0pwn9wi6zdjrkdbm5bsr6-sshpass-1.10"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x8qkxra9b1drg6qslq51m5q2xjsiwyc0-sshpass-1.10",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x8qkxra9b1drg6qslq51m5q2xjsiwyc0-sshpass-1.10"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5kpz1m1ajywibn6ybidnwx5i394wfgzi-sshpass-1.10",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5kpz1m1ajywibn6ybidnwx5i394wfgzi-sshpass-1.10"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/nmdwhc9azmk6cyhswxkgd5m2xw80av1q-sshpass-1.10",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/nmdwhc9azmk6cyhswxkgd5m2xw80av1q-sshpass-1.10"
+        }
+      }
+    }
+  }
+}

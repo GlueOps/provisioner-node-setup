@@ -1,0 +1,165 @@
+---
+- name: Setup Libvirt on the target node
+  hosts: target_nodes
+  become: yes
+  tasks:
+    - name: Set hostname if environment variable exists
+      set_fact:
+        hostname: "{{ lookup('env', 'TARGET_HOSTNAME') }}"
+      when: lookup('env', 'TARGET_HOSTNAME') | length > 0
+
+    - name: Set tailscale_auth_key if environment variable exists
+      set_fact:
+        tailscale_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
+      when: lookup('env', 'TAILSCALE_AUTH_KEY') | length > 0
+
+    - name: Set public_keys if environment variable exists
+      set_fact:
+        public_keys: "{{ lookup('env', 'PUBLIC_KEYS') }}"
+      when: lookup('env', 'PUBLIC_KEYS') | length > 0
+
+    - name: Prompt for hostname if not set
+      pause:
+        prompt: "Enter the new hostname"
+      register: hostname_prompt
+      when: hostname is not defined
+
+    - name: Save hostname if prompted
+      set_fact:
+        hostname: "{{ hostname_prompt.user_input }}"
+      when: hostname is not defined
+
+    - name: Prompt for tailscale_auth_key if not set
+      pause:
+        prompt: "Enter the tailscale auth key"
+      register: tailscale_auth_key_prompt
+      when: tailscale_auth_key is not defined
+
+    - name: Save tailscale_auth_key if prompted
+      set_fact:
+        tailscale_auth_key: "{{ tailscale_auth_key_prompt.user_input }}"
+      when: tailscale_auth_key is not defined
+
+    - name: Prompt for public_keys if not set
+      pause:
+        prompt: "Enter the public keys (comma-separated)"
+      register: public_keys_prompt
+      when: public_keys is not defined
+
+    - name: Save public_keys if prompted
+      set_fact:
+        public_keys: "{{ public_keys_prompt.user_input }}"
+      when: public_keys is not defined
+
+    - name: Parse public keys
+      set_fact:
+        public_keys_array: "{{ public_keys.split(',') }}"
+
+    - name: Set timezone to UTC
+      timezone:
+        name: UTC
+
+    - name: Set hostname
+      hostname:
+        name: "{{ hostname }}"
+        use: debian
+
+    - name: Update /etc/hosts file
+      template:
+        src: ../templates/hosts.j2
+        dest: /etc/hosts
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Modify dnsmasq file
+      template:
+        src: ../templates/dnsmasq.j2
+        dest: /etc/default/dnsmasq
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: create directory for htoprc
+      file:
+        path:  /root/.config/htop
+        state: directory
+
+    - name: Create htoprc
+      template:
+        src: ../templates/htoprc.j2
+        dest: /root/.config/htop/htoprc
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Install tailscale
+      shell: curl -fsSL https://tailscale.com/install.sh | sh
+
+    - name: Start tailscale
+      command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
+ 
+    - name: Install libvirt, libvirt dependencies, and other packages
+      apt:
+        name: 
+          - dnsmasq
+          - qemu-system-x86
+          - libvirt-daemon-system
+          - libvirt-clients
+          - bridge-utils
+          - virtinst
+          - virt-manager
+          - qemu-utils
+          - xmlstarlet
+          - jq
+          - htop
+        state: present
+        update_cache: yes
+    
+    - name: Remove systemd-resolved
+      apt:
+        name: systemd-resolved
+        state: absent
+      ignore_errors: yes
+
+    - name: Create dns configuration file
+      template:
+        src: ../templates/resolv.conf.j2
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Enable and start libvirtd service
+      service:
+        name: libvirtd
+        enabled: yes
+        state: started
+
+    - name: Enable and start the default libvirt network
+      shell: |
+        virsh net-start default
+        virsh net-autostart default
+      changed_when: false
+      when: false
+
+    - name: Modify sshd_config
+      template:
+        src: ../templates/sshd_config.j2
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Add public key to authorized_keys
+      authorized_key:
+        user: root  
+        key: "{{ item }}"
+        state: present
+      loop: "{{ public_keys_array }}"
+
+    - name: Reboot the target node
+      command: reboot
+      async: 1
+      poll: 0
+      ignore_errors: yes
