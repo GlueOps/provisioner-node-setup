@@ -3,10 +3,10 @@
   hosts: target_nodes
   become: yes
   tasks:
-    - name: Set hostname if environment variable exists
+    - name: Set hostname if inventory_hostname is valid
       set_fact:
-        hostname: "{{ lookup('env', 'TARGET_HOSTNAME') }}"
-      when: lookup('env', 'TARGET_HOSTNAME') | length > 0
+        hostname: "{{ inventory_hostname }}"
+      failed_when: not inventory_hostname or inventory_hostname | length == 0
 
     - name: Set tailscale_auth_key if environment variable exists
       set_fact:
