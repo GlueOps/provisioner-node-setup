@@ -3,7 +3,7 @@
   hosts: target_nodes
   become: yes
   tasks:
-    - name: Set hostname if environment variable exists
+    - name: Set hostname if inventory_hostname is valid
       set_fact:
         hostname: "{{ inventory_hostname }}"
       failed_when: not inventory_hostname or inventory_hostname | length == 0
