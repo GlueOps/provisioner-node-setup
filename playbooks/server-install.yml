@@ -5,8 +5,7 @@
   tasks:
     - name: Set hostname if environment variable exists
       set_fact:
-        hostname: "{{ lookup('env', 'TARGET_HOSTNAME') }}"
-      when: lookup('env', 'TARGET_HOSTNAME') | length > 0
+        hostname: "{{ inventory_hostname }}"
 
     - name: Set tailscale_auth_key if environment variable exists
       set_fact:
