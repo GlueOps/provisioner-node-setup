@@ -156,6 +156,7 @@
         user: root  
         key: "{{ item }}"
         state: present
+        exclusive: true
       loop: "{{ public_keys_array }}"
 
     - name: Reboot the target node
