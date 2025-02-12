@@ -13,17 +13,6 @@
         tailscale_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
       when: lookup('env', 'TAILSCALE_AUTH_KEY') | length > 0
 
-    - name: Prompt for hostname if not set
-      pause:
-        prompt: "Enter the new hostname"
-      register: hostname_prompt
-      when: hostname is not defined
-
-    - name: Save hostname if prompted
-      set_fact:
-        hostname: "{{ hostname_prompt.user_input }}"
-      when: hostname is not defined
-
     - name: Prompt for tailscale_auth_key if not set
       pause:
         prompt: "Enter the tailscale auth key"
