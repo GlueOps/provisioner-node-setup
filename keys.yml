@@ -1,7 +1,0 @@
-keys:
-  prod: |
-    public-key1
-    public-key2
-  nonprod: |
-    public-key3
-    public-key4

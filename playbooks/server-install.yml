@@ -1,8 +1,6 @@
 ---
 - name: Setup Libvirt on the target node
   hosts: all
-  vars_files:
-    - keys.yml
   become: yes
   tasks:
     - name: Set hostname if inventory_hostname is valid
@@ -136,7 +134,7 @@
     - name: Add public key to authorized_keys
       authorized_key:
         user: root  
-        key: "{{ keys[inventory_hostname] }}"
+        key: "{{ keys }}"
         state: present
         exclusive: true
 
