@@ -131,6 +131,16 @@
         group: root
         mode: 0644
 
+    - name: Remove all users except root
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: yes
+      loop:
+        - glueops
+        - admin
+        - debian
+    
     - name: Add public key to authorized_keys
       authorized_key:
         user: root  
