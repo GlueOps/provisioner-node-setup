@@ -112,7 +112,6 @@
         virsh net-start default
         virsh net-autostart default
       changed_when: false
-      when: false
 
     - name: Modify sshd_config
       template:
