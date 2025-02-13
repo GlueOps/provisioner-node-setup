@@ -62,12 +62,6 @@
         group: root
         mode: 0644
 
-    - name: Install tailscale
-      shell: curl -fsSL https://tailscale.com/install.sh | sh
-
-    - name: Start tailscale
-      command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
- 
     - name: Install libvirt, libvirt dependencies, and other packages
       apt:
         name: 
@@ -82,8 +76,16 @@
           - xmlstarlet
           - jq
           - htop
+          - curl
+          - tmux
         state: present
         update_cache: yes
+    
+    - name: Install tailscale
+      shell: curl -fsSL https://tailscale.com/install.sh | sh
+        
+    - name: Start tailscale
+      command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
     
     - name: Remove systemd-resolved
       apt:
