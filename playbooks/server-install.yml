@@ -137,9 +137,3 @@
         key: "{{ keys }}"
         state: present
         exclusive: true
-
-    - name: Reboot the target node
-      command: reboot
-      async: 1
-      poll: 0
-      ignore_errors: yes
