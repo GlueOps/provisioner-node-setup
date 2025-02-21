@@ -13,17 +13,6 @@
         tailscale_auth_key: "{{ lookup('env', 'TAILSCALE_AUTH_KEY') }}"
       when: lookup('env', 'TAILSCALE_AUTH_KEY') | length > 0
 
-    - name: Prompt for tailscale_auth_key if not set
-      pause:
-        prompt: "Enter the tailscale auth key"
-      register: tailscale_auth_key_prompt
-      when: tailscale_auth_key is not defined
-
-    - name: Save tailscale_auth_key if prompted
-      set_fact:
-        tailscale_auth_key: "{{ tailscale_auth_key_prompt.user_input }}"
-      when: tailscale_auth_key is not defined
-
     - name: Set timezone to UTC
       timezone:
         name: UTC
@@ -83,9 +72,11 @@
     
     - name: Install tailscale
       shell: curl -fsSL https://tailscale.com/install.sh | sh
+      when: tailscale_auth_key is defined
         
     - name: Start tailscale
       command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
+      when: tailscale_auth_key is defined
     
     - name: Remove systemd-resolved
       apt:
