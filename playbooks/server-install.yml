@@ -115,6 +115,11 @@
         mode: 0644
       notify: Restart sshd service
 
+    - name: Restart sshd service
+      service:
+        name: sshd
+        state: restarted
+
     - name: Remove all users except root
       user:
         name: "{{ item }}"
@@ -131,9 +136,3 @@
         key: "{{ keys }}"
         state: present
         exclusive: true
-
-  handlers:
-    - name: Restart sshd service
-      service:
-        name: sshd
-        state: restarted
