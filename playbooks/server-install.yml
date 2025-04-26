@@ -170,3 +170,23 @@
           - docker-compose-plugin
         state: present
         update_cache: yes
+
+    - name: Create docker compose file
+      template:
+        src: ../templates/docker-compose.j2
+        dest: /opt/nginx/docker-compose.yaml
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Create nginx cache file
+      template:
+        src: ../templates/cache.conf.j2
+        dest: /opt/nginx/cache.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Start nginx docker image
+      shell: |
+        docker compose -f /opt/nginx/docker-compose.yaml up -d
