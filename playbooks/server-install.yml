@@ -68,6 +68,8 @@
           - htop
           - curl
           - tmux
+          - ca-certificates
+          - curl
         state: present
         update_cache: yes
     
@@ -135,3 +137,36 @@
         key: "{{ keys }}"
         state: present
         exclusive: true
+
+    - name: uninstall docker if it exists
+      shell: |
+        for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+
+    - name: Create keyrings directory
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: 0755
+
+    - name: Add Docker GPG apt Key
+      get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 0644
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch={{ ansible_architecture }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
+        filename: docker
+        state: present
+
+    - name: Install docker
+      apt:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
