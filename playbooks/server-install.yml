@@ -171,6 +171,14 @@
         state: present
         update_cache: yes
 
+    - name: Ensure /opt/nginx directory exists
+      file:
+        path: /opt/nginx
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
     - name: Create docker compose file
       template:
         src: ../templates/docker-compose.j2
