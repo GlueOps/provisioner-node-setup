@@ -83,7 +83,6 @@
           - curl
           - tmux
           - ca-certificates
-          - curl
         state: present
         update_cache: yes
     
