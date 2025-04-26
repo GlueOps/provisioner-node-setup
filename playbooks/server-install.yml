@@ -140,7 +140,7 @@
 
     - name: uninstall docker if it exists
       shell: |
-        for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+        for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do apt-get remove $pkg; done
 
     - name: Create keyrings directory
       file:
