@@ -138,10 +138,8 @@
         exclusive: true
 
     - name: Add Docker GPG apt Key
-      get_url:
-        apt_key: 
+      apt_key:
         url: https://download.docker.com/linux/debian/gpg
-        dest: /etc/apt/keyrings/docker.asc
         state: present
 
     - name: Add Docker repository
