@@ -201,7 +201,7 @@
     - name: Reload systemd daemon
       command: systemctl daemon-reload
 
-    - name: Enable and start Nginx Docker Compose service
+    - name: Enable and start Provisioner Cache service
       service:
         name: provisioner-cache
         enabled: yes

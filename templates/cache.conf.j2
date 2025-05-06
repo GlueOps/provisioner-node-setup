@@ -22,8 +22,7 @@ http {
             proxy_cache my_cache;
 
             # Cache expiry settings
-            proxy_cache_valid 200 48h;   # Cache 200 responses for 48 hours
-            proxy_cache_valid 404 1m;    # Cache 404 responses for 1 minute
+            proxy_cache_valid 200 30d;   # Cache 200 responses for 30 days
             proxy_cache_use_stale error timeout updating;
             
             # Add headers to show the cache status (HIT, MISS, etc.)
