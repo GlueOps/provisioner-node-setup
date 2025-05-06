@@ -5,8 +5,8 @@ Requires=docker.service
 
 [Service]
 WorkingDirectory=/opt/nginx
-ExecStart=/usr/bin/docker compose -f /opt/nginx/docker-compose.yaml up -d
-ExecStop=/usr/bin/docker compose -f /opt/nginx/docker-compose.yaml down
+ExecStart=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml up -d
+ExecStop=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml down
 Restart=always
 RestartSec=5s
 

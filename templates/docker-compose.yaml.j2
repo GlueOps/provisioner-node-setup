@@ -1,8 +1,7 @@
-version: '3.8'
 services:
   cache:
     image: nginx:1.27.5@sha256:c15da6c91de8d2f436196f3a768483ad32c258ed4e1beb3d367a27ed67253e66
     ports:
       - "127.0.0.1:1337:1337"
     volumes:
-      - /opt/nginx/cache.conf:/etc/nginx/nginx.conf:ro
+      - /opt/provisioner-cache/cache.conf:/etc/nginx/nginx.conf:ro
