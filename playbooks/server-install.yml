@@ -166,9 +166,9 @@
         state: present
         update_cache: yes
 
-    - name: Ensure /opt/nginx directory exists
+    - name: Ensure /opt/provisioner-cache directory exists
       file:
-        path: /opt/nginx
+        path: /opt/provisioner-cache
         state: directory
         owner: root
         group: root
@@ -177,20 +177,20 @@
     - name: Create docker compose file
       template:
         src: ../templates/docker-compose.yaml.j2
-        dest: /opt/nginx/docker-compose.yaml
+        dest: /opt/provisioner-cache/docker-compose.yaml
         owner: root
         group: root
         mode: 0644
 
-    - name: Create nginx cache file
+    - name: Create provisioner-cache file
       template:
         src: ../templates/cache.conf.j2
-        dest: /opt/nginx/cache.conf
+        dest: /opt/provisioner-cache/cache.conf
         owner: root
         group: root
         mode: 0644
 
-    - name: Create systemd service file for Nginx Docker Compose
+    - name: Create systemd service file for provisioner cache
       template:
         src: ../templates/provisioner-cache.service.j2
         dest: /etc/systemd/system/provisioner-cache.service
