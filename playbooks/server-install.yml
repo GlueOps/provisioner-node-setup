@@ -176,7 +176,7 @@
 
     - name: Create docker compose file
       template:
-        src: ../templates/docker-compose.j2
+        src: ../templates/docker-compose.yaml.j2
         dest: /opt/nginx/docker-compose.yaml
         owner: root
         group: root
@@ -190,6 +190,19 @@
         group: root
         mode: 0644
 
-    - name: Start nginx docker image
-      shell: |
-        docker compose -f /opt/nginx/docker-compose.yaml up -d
+    - name: Create systemd service file for Nginx Docker Compose
+      template:
+        src: ../templates/nginx-docker.service.j2
+        dest: /etc/systemd/system/nginx-docker.service
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Reload systemd daemon
+      command: systemctl daemon-reload
+
+    - name: Enable and start Nginx Docker Compose service
+      service:
+        name: nginx-docker
+        enabled: yes
+        state: started
