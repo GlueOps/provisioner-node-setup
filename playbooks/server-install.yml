@@ -137,21 +137,11 @@
         state: present
         exclusive: true
 
-    - name: uninstall docker if it exists
-      shell: |
-        for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do apt-get remove $pkg; done
-
-    - name: Create keyrings directory
-      file:
-        path: /etc/apt/keyrings
-        state: directory
-        mode: 0755
-
     - name: Add Docker GPG apt Key
       get_url:
+        apt_key: 
         url: https://download.docker.com/linux/debian/gpg
-        dest: /etc/apt/keyrings/docker.asc
-        mode: 0644
+        state: present
 
     - name: Add Docker repository
       apt_repository:
