@@ -137,10 +137,17 @@
         state: present
         exclusive: true
 
+    - name: Create keyrings directory
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: 0755
+
     - name: Add Docker GPG apt Key
-      apt_key:
+      get_url:
         url: https://download.docker.com/linux/debian/gpg
-        state: present
+        dest: /etc/apt/keyrings/docker.asc
+        mode: 0644
 
     - name: Add Docker repository
       apt_repository:
