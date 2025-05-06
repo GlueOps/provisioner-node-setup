@@ -192,8 +192,8 @@
 
     - name: Create systemd service file for Nginx Docker Compose
       template:
-        src: ../templates/nginx-docker.service.j2
-        dest: /etc/systemd/system/nginx-docker.service
+        src: ../templates/provisioner-cache.service.j2
+        dest: /etc/systemd/system/provisioner-cache.service
         owner: root
         group: root
         mode: 0644
@@ -203,6 +203,6 @@
 
     - name: Enable and start Nginx Docker Compose service
       service:
-        name: nginx-docker
+        name: provisioner-cache
         enabled: yes
         state: started
