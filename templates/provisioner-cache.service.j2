@@ -4,7 +4,7 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-WorkingDirectory=/opt/nginx
+WorkingDirectory=/opt/provisioner-cache
 ExecStart=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml up -d
 ExecStop=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml down
 Restart=always
