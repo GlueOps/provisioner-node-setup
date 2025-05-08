@@ -5,7 +5,7 @@ Requires=docker.service
 
 [Service]
 WorkingDirectory=/opt/provisioner-cache
-ExecStart=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml up -d
+ExecStart=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml up --remove-orphans --build --no-cache --pull missing --force-recreate
 ExecStop=/usr/bin/docker compose -f /opt/provisioner-cache/docker-compose.yaml down
 Restart=always
 RestartSec=5s
