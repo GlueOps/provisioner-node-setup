@@ -1,73 +1,73 @@
 {
   "lockfile_version": "1",
   "packages": {
-    "ansible@latest": {
-      "last_modified": "2025-01-15T12:23:19Z",
-      "resolved": "github:NixOS/nixpkgs/ae2fb9f1fb5fcf17fb59f25c2a881c170c501d6f#ansible",
+    "ansible@2.18.4": {
+      "last_modified": "2025-05-12T14:38:58Z",
+      "resolved": "github:NixOS/nixpkgs/eaeed9530c76ce5f1d2d8232e08bec5e26f18ec1#ansible",
       "source": "devbox-search",
-      "version": "2.18.1",
+      "version": "2.18.4",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/r8viz1g2jns0kbs6jbb2nbmyfwq5a6pc-python3.12-ansible-core-2.18.1",
+              "path": "/nix/store/igix7bqc2fp9pcgldhwvmylg30xs9qm4-python3.12-ansible-core-2.18.4",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/6xssqmn60qjs69glqn9c319wh20l8wbb-python3.12-ansible-core-2.18.1-dist"
+              "path": "/nix/store/pj7lra5hzv4y1ry26svnaxzzdkgm495x-python3.12-ansible-core-2.18.4-dist"
             }
           ],
-          "store_path": "/nix/store/r8viz1g2jns0kbs6jbb2nbmyfwq5a6pc-python3.12-ansible-core-2.18.1"
+          "store_path": "/nix/store/igix7bqc2fp9pcgldhwvmylg30xs9qm4-python3.12-ansible-core-2.18.4"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/sy7gms5ijdhh1ws30xfrr6b00yxqaldf-python3.12-ansible-core-2.18.1",
+              "path": "/nix/store/0njs18rh3c8njg95iip8h6qqlm6lzi33-python3.12-ansible-core-2.18.4",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/2y2fa6f0rp996qsxaf0jl6r08jy3jwic-python3.12-ansible-core-2.18.1-dist"
+              "path": "/nix/store/06yrclnjzx5a5d91cfcp5if1mrp5cpgp-python3.12-ansible-core-2.18.4-dist"
             }
           ],
-          "store_path": "/nix/store/sy7gms5ijdhh1ws30xfrr6b00yxqaldf-python3.12-ansible-core-2.18.1"
+          "store_path": "/nix/store/0njs18rh3c8njg95iip8h6qqlm6lzi33-python3.12-ansible-core-2.18.4"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/gnlna7nzj8jvf3jpk2rk9dmarzi8l604-python3.12-ansible-core-2.18.1",
+              "path": "/nix/store/f69knx97k15bb337sxbfmzbjdbhiymbd-python3.12-ansible-core-2.18.4",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/nvvv5azi3sy3d538f1pffnx8h8ddp564-python3.12-ansible-core-2.18.1-dist"
+              "path": "/nix/store/2ywsgk9y55wzcybvrlikh97710kh5s13-python3.12-ansible-core-2.18.4-dist"
             }
           ],
-          "store_path": "/nix/store/gnlna7nzj8jvf3jpk2rk9dmarzi8l604-python3.12-ansible-core-2.18.1"
+          "store_path": "/nix/store/f69knx97k15bb337sxbfmzbjdbhiymbd-python3.12-ansible-core-2.18.4"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/wdh4w7i2bd7v31qfki9kdkh1p4crpfw3-python3.12-ansible-core-2.18.1",
+              "path": "/nix/store/073a1s3c809h7qkngvrcpskqqmbyqz8l-python3.12-ansible-core-2.18.4",
               "default": true
             },
             {
               "name": "dist",
-              "path": "/nix/store/lscbmck2yf0icw8hswibpwj7isqplj6m-python3.12-ansible-core-2.18.1-dist"
+              "path": "/nix/store/hp5gqjir23yxkzfbnfzbi74m3pgpk912-python3.12-ansible-core-2.18.4-dist"
             }
           ],
-          "store_path": "/nix/store/wdh4w7i2bd7v31qfki9kdkh1p4crpfw3-python3.12-ansible-core-2.18.1"
+          "store_path": "/nix/store/073a1s3c809h7qkngvrcpskqqmbyqz8l-python3.12-ansible-core-2.18.4"
         }
       }
     },
-    "sshpass@latest": {
-      "last_modified": "2024-12-23T21:10:33Z",
-      "resolved": "github:NixOS/nixpkgs/de1864217bfa9b5845f465e771e0ecb48b30e02d#sshpass",
+    "sshpass@1.10": {
+      "last_modified": "2025-05-06T08:06:31Z",
+      "resolved": "github:NixOS/nixpkgs/1cb1c02a6b1b7cf67e3d7731cbbf327a53da9679#sshpass",
       "source": "devbox-search",
       "version": "1.10",
       "systems": {
@@ -75,41 +75,41 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/8cww4cyicyb0pwn9wi6zdjrkdbm5bsr6-sshpass-1.10",
+              "path": "/nix/store/3g32038n9f327w84bak853di824i6qbr-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/8cww4cyicyb0pwn9wi6zdjrkdbm5bsr6-sshpass-1.10"
+          "store_path": "/nix/store/3g32038n9f327w84bak853di824i6qbr-sshpass-1.10"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/x8qkxra9b1drg6qslq51m5q2xjsiwyc0-sshpass-1.10",
+              "path": "/nix/store/319lghymz6z29raikibxazz6nv6pwf4n-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/x8qkxra9b1drg6qslq51m5q2xjsiwyc0-sshpass-1.10"
+          "store_path": "/nix/store/319lghymz6z29raikibxazz6nv6pwf4n-sshpass-1.10"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/5kpz1m1ajywibn6ybidnwx5i394wfgzi-sshpass-1.10",
+              "path": "/nix/store/jlhw1drd3zmkgb12jvq40b41cgzix28c-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/5kpz1m1ajywibn6ybidnwx5i394wfgzi-sshpass-1.10"
+          "store_path": "/nix/store/jlhw1drd3zmkgb12jvq40b41cgzix28c-sshpass-1.10"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/nmdwhc9azmk6cyhswxkgd5m2xw80av1q-sshpass-1.10",
+              "path": "/nix/store/wirghv388jpvxmyd6wm144bz1dzwfzx7-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/nmdwhc9azmk6cyhswxkgd5m2xw80av1q-sshpass-1.10"
+          "store_path": "/nix/store/wirghv388jpvxmyd6wm144bz1dzwfzx7-sshpass-1.10"
         }
       }
     }
