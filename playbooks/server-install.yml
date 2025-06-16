@@ -83,6 +83,7 @@
           - curl
           - tmux
           - ca-certificates
+          - libnss-libvirt
         state: present
         update_cache: yes
     
@@ -106,6 +107,14 @@
         virsh net-start default
         virsh net-autostart default
       changed_when: false
+
+    - name: Modify nsswitch.conf
+      template:
+        src: ../templates/nsswitch.conf.j2
+        dest: /etc/nsswitch.conf
+        owner: root
+        group: root
+        mode: 0644
 
     - name: Modify sshd_config
       template:
