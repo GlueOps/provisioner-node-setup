@@ -4,6 +4,7 @@
   become: yes
   vars:
     snapshot_timestamp: "20250701T120000Z"
+    docker_version_string: "5:28.3.0-1~debian.12~bookworm"
 
   tasks:
     - name: Remove systemd-resolved
@@ -216,11 +217,11 @@
         filename: docker
         state: present
 
-    - name: Install docker
-      apt:
+    - name: "Install Docker version {{ docker_version_string }}"
+      ansible.builtin.apt:
         name:
-          - docker-ce
-          - docker-ce-cli
+          - "docker-ce={{ docker_version_string }}"
+          - "docker-ce-cli={{ docker_version_string }}"
           - containerd.io
           - docker-buildx-plugin
           - docker-compose-plugin
