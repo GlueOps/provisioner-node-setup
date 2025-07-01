@@ -1,0 +1,17 @@
+# This file is managed by Ansible. DO NOT EDIT MANUALLY.
+# Pin all packages to the {{ ansible_distribution_release }} snapshot timestamp.
+
+# Pin for main repository
+Package: *
+Pin: release n={{ ansible_distribution_release }}
+Pin-Priority: 1001
+
+# Pin for security repository
+Package: *
+Pin: release n={{ ansible_distribution_release }}-security
+Pin-Priority: 1001
+
+# Pin for updates repository
+Package: *
+Pin: release n={{ ansible_distribution_release }}-updates
+Pin-Priority: 1001
