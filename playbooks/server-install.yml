@@ -78,6 +78,20 @@
         mode: '0644'
       notify: apt update triggered
 
+    - name: Find all existing .list files in sources.list.d
+      ansible.builtin.find:
+        paths: /etc/apt/sources.list.d/
+        patterns: "*.list"
+      register: found_source_files
+    
+    - name: Remove all unmanaged .list files from sources.list.d
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ found_source_files.files }}"
+      when: item.path | basename != '00-ansible-snapshot.list'
+      notify: apt update triggered
+
     - name: Deploy snapshot sources list from template
       ansible.builtin.template:
         src: ../templates/snapshot.list.j2
