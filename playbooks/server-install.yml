@@ -6,10 +6,11 @@
     # https://snapshot.debian.org/
     snapshot_timestamp: "20250701T120000Z"
     # https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
-    docker_version_string: "28.3.0-1~debian.12~bookworm"
-    docker_buildx_version: "0.25.0-1~debian.12~bookworm"
-    docker_compose_version: "2.37.3-1~debian.12~bookworm"
-    docker_containerd_version: "1.7.27-1"
+    # Ensure the version is prefixed with "5:" for compatibility with Debian Bookworm
+    docker_version_string: "5:28.3.0-1~debian.12~bookworm"
+    docker_buildx_version: "5:0.25.0-1~debian.12~bookworm"
+    docker_compose_version: "5:2.37.3-1~debian.12~bookworm"
+    docker_containerd_version: "5:1.7.27-1"
 
   tasks:
     - name: Remove systemd-resolved
@@ -248,11 +249,11 @@
     - name: "Install Docker"
       ansible.builtin.apt:
         name:
-          - "docker-ce"
-          - "docker-ce-cli"
-          - "containerd.io"
-          - "docker-buildx-plugin"
-          - "docker-compose-plugin"
+          - "docker-ce={{ docker_version_string }}"
+          - "docker-ce-cli={{ docker_version_string }}"
+          - "containerd.io={{ docker_containerd_version }}"
+          - "docker-buildx-plugin={{ docker_buildx_version }}"
+          - "docker-compose-plugin={{ docker_compose_version }}"
         state: present
         update_cache: yes
 
