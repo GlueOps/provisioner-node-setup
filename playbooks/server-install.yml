@@ -102,6 +102,21 @@
       when: item.path | basename != '00-ansible-snapshot.list'
       notify: update apt cache
 
+    - name: Find all editor backup files in /etc/apt/ and subdirectories
+      ansible.builtin.find:
+        paths: /etc/apt/
+        patterns: "*~"
+        recurse: yes
+      register: backup_files_to_remove
+
+    - name: Remove found editor backup files to enforce a clean state
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ backup_files_to_remove.files }}"
+      loop_control:
+        label: "{{ item.path }}"
+
     - name: Ensure no pinning preference files exist
       ansible.builtin.find:
         paths: /etc/apt/preferences.d/
