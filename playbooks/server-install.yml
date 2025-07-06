@@ -23,7 +23,7 @@
         host: "{{ inventory_hostname }}"
         port: 2222
         state: started
-        timeout: 1
+        timeout: 5
       delegate_to: localhost
       ignore_errors: true
       register: port_2222_check
