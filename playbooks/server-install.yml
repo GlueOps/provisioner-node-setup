@@ -75,14 +75,18 @@
         group: root
         mode: 0644
 
-    - name: Ensure main sources.list is empty to prevent conflicts
-      ansible.builtin.copy:
-        content: ""
-        dest: /etc/apt/sources.list
-        owner: root
-        group: root
-        mode: '0644'
-      notify: apt update triggered
+    - name: Create a one-time backup of the original sources.list for safety
+      ansible.builtin.command: mv /etc/apt/sources.list /etc/apt/sources.list.original_backup
+      args:
+        creates: /etc/apt/sources.list.original_backup
+      changed_when: false
+      failed_when: false
+
+    - name: Enforce that the default sources.list file is absent on every run
+      ansible.builtin.file:
+        path: /etc/apt/sources.list
+        state: absent
+      notify: Run apt update
 
     - name: Find all existing .list files in sources.list.d
       ansible.builtin.find:
