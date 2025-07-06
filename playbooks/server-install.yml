@@ -1,8 +1,56 @@
 ---
+# -----------------------------------------------------------------------------
+# PLAY 1: Discover which SSH port is open.
+# This runs first to find the correct port without failing.
+# -----------------------------------------------------------------------------
+- name: Discover Open SSH Port
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Probe for SSH on default port 22
+      ansible.builtin.wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 22
+        state: started
+        timeout: 5
+      delegate_to: localhost
+      ignore_errors: true
+      register: port_22_check
+
+    - name: Probe for SSH on custom port 2222
+      ansible.builtin.wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 2222
+        state: started
+        timeout: 1
+      delegate_to: localhost
+      ignore_errors: true
+      register: port_2222_check
+
+    - name: Fail if neither SSH port is accessible
+      ansible.builtin.fail:
+        msg: "Cannot connect to host {{ inventory_hostname }} on port 22 or 2222. Please check the server and firewall."
+      when: port_22_check.state != 'started' and port_2222_check.state != 'started'
+
+    - name: Set discovered SSH port as a fact
+      ansible.builtin.set_fact:
+        discovered_ssh_port: "{{ 22 if port_22_check.state == 'started' else 2222 }}"
+
+    - name: Show which port was found
+      ansible.builtin.debug:
+        msg: "Host {{ inventory_hostname }} is accessible on port {{ discovered_ssh_port }}. Proceeding with configuration."
+
+# -----------------------------------------------------------------------------
+# PLAY 2: Main playbook, Using the discovered port.
+# -----------------------------------------------------------------------------
+- name: Setup Libvirt on the target node
+
 - name: Setup Libvirt on the target node
   hosts: all
   become: yes
   vars:
+    ansible_port: "{{ discovered_ssh_port }}"
     # https://snapshot.debian.org/
     snapshot_timestamp: "20250701T120000Z"
     # https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
