@@ -82,11 +82,11 @@
       changed_when: false
       failed_when: false
 
-    - name: Enforce that the default sources.list file is absent on every run
+    - name: Enforce that the default sources.list file is absent
       ansible.builtin.file:
         path: /etc/apt/sources.list
         state: absent
-      notify: Run apt update
+      notify: update apt cache
 
     - name: Find all existing .list files in sources.list.d
       ansible.builtin.find:
@@ -100,7 +100,20 @@
         state: absent
       loop: "{{ found_source_files.files }}"
       when: item.path | basename != '00-ansible-snapshot.list'
-      notify: apt update triggered
+      notify: update apt cache
+
+    - name: Ensure no pinning preference files exist
+      ansible.builtin.find:
+        paths: /etc/apt/preferences.d/
+        patterns: "*"
+      register: found_pref_files
+
+    - name: Remove all pinning preference files
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ found_pref_files.files }}"
+      notify: update apt cache
 
     - name: Deploy snapshot sources list from template
       ansible.builtin.template:
@@ -109,21 +122,12 @@
         owner: root
         group: root
         mode: '0644'
-      notify: apt update triggered
+      notify: update apt cache
 
-    - name: Deploy snapshot pinning preferences from template
-      ansible.builtin.template:
-        src: ../templates/snapshot.pin.j2
-        dest: /etc/apt/preferences.d/00-ansible-snapshot-pin
-        owner: root
-        group: root
-        mode: '0644'
-      notify: apt update triggered
-
-    - name: Force handlers to run before potential upgrade
+    - name: Force handlers to run to update apt cache before upgrade
       ansible.builtin.meta: flush_handlers
 
-    - name: Perform a full-upgrade to align with the snapshot
+    - name: Perform a full-upgrade to align system with the snapshot
       ansible.builtin.apt:
         upgrade: full
         autoremove: yes
@@ -279,7 +283,6 @@
         state: started
 
   handlers:
-    - name: Update apt cache
-      listen: "apt update triggered"
+    - name: update apt cache
       ansible.builtin.apt:
         update_cache: yes
