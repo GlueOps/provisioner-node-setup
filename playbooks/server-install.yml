@@ -31,11 +31,11 @@
     - name: Fail if neither SSH port is accessible
       ansible.builtin.fail:
         msg: "Cannot connect to host {{ inventory_hostname }} on port 22 or 2222. Please check the server and firewall."
-      when: port_22_check.state != 'started' and port_2222_check.state != 'started'
+      when: port_22_check.failed and port_2222_check.failed
 
     - name: Set discovered SSH port as a fact
       ansible.builtin.set_fact:
-        discovered_ssh_port: "{{ 22 if port_22_check.state == 'started' else 2222 }}"
+        discovered_ssh_port: "{{ 22 if not port_22_check.failed else 2222 }}"
 
     - name: Show which port was found
       ansible.builtin.debug:
