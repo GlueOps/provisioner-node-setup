@@ -45,8 +45,6 @@
 # PLAY 2: Main playbook, Using the discovered port.
 # -----------------------------------------------------------------------------
 - name: Setup Libvirt on the target node
-
-- name: Setup Libvirt on the target node
   hosts: all
   become: yes
   vars:
