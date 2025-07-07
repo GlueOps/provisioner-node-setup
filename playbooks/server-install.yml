@@ -20,7 +20,7 @@
 
     - name: Probe for SSH on custom port 2222
       ansible.builtin.wait_for:
-        host: "{{ inventory_hostname }}"
+        host: "{{ ansible_host }}"
         port: 2222
         state: started
         timeout: 5
