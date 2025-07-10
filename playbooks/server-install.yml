@@ -50,7 +50,8 @@
   vars:
     ansible_port: "{{ discovered_ssh_port }}"
     # https://snapshot.debian.org/
-    snapshot_timestamp: "20250701T120000Z"
+    #curl -s 'http://snapshot.debian.org/archive/debian/?year=2025&month=07' | grep -oP '202507\d{2}T\d{6}Z' | sort | tail -1
+    snapshot_timestamp: "20250710T143657Z"
     # https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
     # Ensure the version is prefixed with "5:" for docker version only
     docker_version_string: "5:28.3.0-1~debian.12~bookworm"
