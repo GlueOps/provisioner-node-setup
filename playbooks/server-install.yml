@@ -214,10 +214,7 @@
           - ca-certificates
           - libnss-libvirt
         state: present
-        update_cache: yes
-      environment:
-        APT_CONFIG: /dev/null
-        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
+        allow_downgrade: yes
     
     - name: Install tailscale
       shell: curl -fsSL https://tailscale.com/install.sh | sh
@@ -296,6 +293,9 @@
         filename: docker
         state: present
 
+    - name: Force apt-get update allowing expired snapshot metadata
+      command: apt-get update -o Acquire::Check-Valid-Until=false
+
     - name: "Install Docker"
       ansible.builtin.apt:
         name:
@@ -305,11 +305,7 @@
           - "docker-buildx-plugin={{ docker_buildx_version }}"
           - "docker-compose-plugin={{ docker_compose_version }}"
         state: present
-        update_cache: yes
         allow_downgrade: yes
-      environment:
-        APT_CONFIG: /dev/null
-        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
 
     - name: Ensure /opt/provisioner-cache directory exists
       file:
@@ -354,8 +350,5 @@
 
   handlers:
     - name: update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
-      environment:
-        APT_CONFIG: /dev/null
-        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
+      ansible.builtin.command: >
+        apt-get update -o Acquire::Check-Valid-Until=false
