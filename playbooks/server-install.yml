@@ -214,6 +214,9 @@
           - libnss-libvirt
         state: present
         update_cache: yes
+      environment:
+        APT_CONFIG: /dev/null
+        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
     
     - name: Install tailscale
       shell: curl -fsSL https://tailscale.com/install.sh | sh
@@ -303,6 +306,9 @@
         state: present
         update_cache: yes
         allow_downgrade: yes
+      environment:
+        APT_CONFIG: /dev/null
+        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
 
     - name: Ensure /opt/provisioner-cache directory exists
       file:
@@ -349,3 +355,6 @@
     - name: update apt cache
       ansible.builtin.apt:
         update_cache: yes
+      environment:
+        APT_CONFIG: /dev/null
+        APT_OPTIONS: "-o Acquire::Check-Valid-Until=false"
