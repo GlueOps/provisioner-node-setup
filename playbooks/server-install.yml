@@ -50,6 +50,7 @@
   vars:
     ansible_port: "{{ discovered_ssh_port }}"
     # https://snapshot.debian.org/
+    #curl -s 'http://snapshot.debian.org/archive/debian/?year=2025&month=07' | grep -oP '202507\d{2}T\d{6}Z' | sort | tail -1
     snapshot_timestamp: "20250701T120000Z"
     # https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
     # Ensure the version is prefixed with "5:" for docker version only
@@ -213,7 +214,7 @@
           - ca-certificates
           - libnss-libvirt
         state: present
-        update_cache: yes
+        allow_downgrade: yes
     
     - name: Install tailscale
       shell: curl -fsSL https://tailscale.com/install.sh | sh
@@ -292,6 +293,9 @@
         filename: docker
         state: present
 
+    - name: Force apt-get update allowing expired snapshot metadata
+      command: apt-get update -o Acquire::Check-Valid-Until=false
+
     - name: "Install Docker"
       ansible.builtin.apt:
         name:
@@ -301,7 +305,6 @@
           - "docker-buildx-plugin={{ docker_buildx_version }}"
           - "docker-compose-plugin={{ docker_compose_version }}"
         state: present
-        update_cache: yes
         allow_downgrade: yes
 
     - name: Ensure /opt/provisioner-cache directory exists
@@ -347,5 +350,5 @@
 
   handlers:
     - name: update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
+      ansible.builtin.command: >
+        apt-get update -o Acquire::Check-Valid-Until=false
