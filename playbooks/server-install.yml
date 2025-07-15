@@ -230,11 +230,11 @@
 
     - name: Start the default libvirt network if it is not active
       command: virsh net-start default
-      when: "(net_info.rc == 0) and ('Active: no' in net_info.stdout)"
+      when: net_info.rc == 0 and net_info.stdout is search("Active:\s+no")
 
     - name: Enable autostart for the default libvirt network
       command: virsh net-autostart default
-      when: "(net_info.rc == 0) and ('Autostart: no' in net_info.stdout)"
+      when: net_info.rc == 0 and net_info.stdout is search("Autostart:\s+no")
 
     - name: Modify nsswitch.conf
       template:
