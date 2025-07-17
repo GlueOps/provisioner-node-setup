@@ -50,6 +50,7 @@
   vars:
     ansible_port: "{{ discovered_ssh_port }}"
     # https://snapshot.debian.org/
+    #curl -s 'http://snapshot.debian.org/archive/debian/?year=2025&month=07' | grep -oP '202507\d{2}T\d{6}Z' | sort | tail -1
     snapshot_timestamp: "20250701T120000Z"
     # https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
     # Ensure the version is prefixed with "5:" for docker version only
@@ -213,16 +214,7 @@
           - ca-certificates
           - libnss-libvirt
         state: present
-        update_cache: yes
-    
-    - name: Install tailscale
-      shell: curl -fsSL https://tailscale.com/install.sh | sh
-      when: tailscale_auth_key is defined
-        
-    - name: Start tailscale
-      command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
-      when: tailscale_auth_key is defined
-      no_log: true
+        allow_downgrade: yes
 
     - name: Enable and start libvirtd service
       service:
@@ -230,11 +222,18 @@
         enabled: yes
         state: started
 
-    - name: Enable and start the default libvirt network
-      shell: |
-        virsh net-start default
-        virsh net-autostart default
+    - name: Check libvirt 'default' network state
+      command: virsh net-info default
+      register: net_info
       changed_when: false
+      failed_when: false
+
+    - name: Start the default libvirt network if it is not active
+      command: virsh net-start default
+      when: net_info.rc == 0 and net_info.stdout | regex_search('Active:\s+no')
+
+    - name: Enable autostart for the default libvirt network
+      command: virsh net-autostart default
 
     - name: Modify nsswitch.conf
       template:
@@ -286,13 +285,30 @@
         dest: /etc/apt/keyrings/docker.asc
         mode: 0644
 
+    - name: Add Tailscale GPG apt Key
+      get_url:
+        url: https://pkgs.tailscale.com/stable/debian/{{ ansible_lsb.codename }}.noarmor.gpg
+        dest: /etc/apt/keyrings/tailscale-archive-keyring.gpg
+        mode: 0644
+
     - name: Add Docker repository
       apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
         filename: docker
         state: present
+        update_cache: no
 
-    - name: "Install Docker"
+    - name: Add Tailscale repository
+      apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian {{ ansible_lsb.codename }} main"
+        filename: tailscale
+        state: present
+        update_cache: no
+
+    - name: Force apt-get update allowing expired snapshot metadata
+      command: apt-get update -o Acquire::Check-Valid-Until=false
+
+    - name: "Install Docker and tailscale packages"
       ansible.builtin.apt:
         name:
           - "docker-ce={{ docker_version_string }}"
@@ -300,9 +316,14 @@
           - "containerd.io={{ docker_containerd_version }}"
           - "docker-buildx-plugin={{ docker_buildx_version }}"
           - "docker-compose-plugin={{ docker_compose_version }}"
+          - "tailscale"
         state: present
-        update_cache: yes
         allow_downgrade: yes
+
+    - name: Start tailscale
+      command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
+      when: tailscale_auth_key is defined
+      no_log: true
 
     - name: Ensure /opt/provisioner-cache directory exists
       file:
@@ -347,5 +368,5 @@
 
   handlers:
     - name: update apt cache
-      ansible.builtin.apt:
-        update_cache: yes
+      ansible.builtin.command: >
+        apt-get update -o Acquire::Check-Valid-Until=false
