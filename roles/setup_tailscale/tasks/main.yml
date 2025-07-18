@@ -36,6 +36,6 @@
     allow_downgrade: yes
 
 - name: Start tailscale
-  command: tailscale up --authkey {{ tailscale_auth_key }} --ssh --accept-dns=false
+  command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
   when: tailscale_auth_key is defined
   no_log: true
