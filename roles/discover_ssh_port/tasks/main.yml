@@ -1,0 +1,34 @@
+---
+# tasks file for discover_ssh_port
+- name: Probe for SSH on default port 22
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 22
+    state: started
+    timeout: 5
+  delegate_to: localhost
+  ignore_errors: true
+  register: port_22_check
+
+- name: Probe for SSH on custom port 2222
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: 2222
+    state: started
+    timeout: 5
+  delegate_to: localhost
+  ignore_errors: true
+  register: port_2222_check
+
+- name: Fail if neither SSH port is accessible
+  ansible.builtin.fail:
+    msg: "Cannot connect to host {{ inventory_hostname }} on port 22 or 2222. Please check the server and firewall."
+  when: port_22_check.failed and port_2222_check.failed
+
+- name: Set discovered SSH port as a fact
+  ansible.builtin.set_fact:
+    discovered_ssh_port: "{{ 22 if not port_22_check.failed else 2222 }}"
+
+- name: Show which port was found
+  ansible.builtin.debug:
+    msg: "Host {{ inventory_hostname }} is accessible on port {{ discovered_ssh_port }}. Proceeding with configuration."

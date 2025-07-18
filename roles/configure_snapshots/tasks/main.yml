@@ -1,0 +1,73 @@
+---
+# tasks file for configure_snapshots
+- name: Create a one-time backup of the original sources.list for safety
+  ansible.builtin.command: mv /etc/apt/sources.list /etc/apt/sources.list.original_backup
+  args:
+    creates: /etc/apt/sources.list.original_backup
+  changed_when: false
+  failed_when: false
+
+- name: Enforce that the default sources.list file is absent
+  ansible.builtin.file:
+    path: /etc/apt/sources.list
+    state: absent
+  notify: update apt cache
+
+- name: Find all existing .list files in sources.list.d
+  ansible.builtin.find:
+    paths: /etc/apt/sources.list.d/
+    patterns: "*.list"
+  register: found_source_files
+
+- name: Remove all unmanaged .list files from sources.list.d
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ found_source_files.files }}"
+  when: item.path | basename != '00-ansible-snapshot.list'
+  notify: update apt cache
+
+- name: Find all editor backup files in /etc/apt/ and subdirectories
+  ansible.builtin.find:
+    paths: /etc/apt/
+    patterns: "*~"
+    recurse: yes
+  register: backup_files_to_remove
+
+- name: Remove found editor backup files to enforce a clean state
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ backup_files_to_remove.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Ensure no pinning preference files exist
+  ansible.builtin.find:
+    paths: /etc/apt/preferences.d/
+    patterns: "*"
+  register: found_pref_files
+
+- name: Remove all pinning preference files
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ found_pref_files.files }}"
+  notify: update apt cache
+
+- name: Deploy snapshot sources list from template
+  ansible.builtin.template:
+    src: templates/snapshot.list.j2
+    dest: /etc/apt/sources.list.d/00-ansible-snapshot.list
+    owner: root
+    group: root
+    mode: '0644'
+  notify: update apt cache
+
+- name: Force handlers to run to update apt cache before upgrade
+  ansible.builtin.meta: flush_handlers
+
+- name: Perform a full-upgrade to align system with the snapshot
+  ansible.builtin.apt:
+    upgrade: full
+    autoremove: yes

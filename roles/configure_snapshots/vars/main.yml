@@ -1,0 +1,5 @@
+---
+# vars file for configure_snapshots
+# https://snapshot.debian.org/
+#curl -s 'http://snapshot.debian.org/archive/debian/?year=2025&month=07' | grep -oP '202507\d{2}T\d{6}Z' | sort | tail -1
+snapshot_timestamp: "20250701T120000Z"
