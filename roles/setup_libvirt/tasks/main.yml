@@ -33,6 +33,12 @@
     state: present
     allow_downgrade: yes
 
+- name: Remove virt-manager if it exists
+  apt:
+    name: 
+      - virt-manager
+    state: absent
+
 - name: Enable and start libvirtd service
   service:
     name: libvirtd
