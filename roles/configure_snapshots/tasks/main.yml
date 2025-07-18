@@ -57,7 +57,7 @@
 
 - name: Deploy snapshot sources list from template
   ansible.builtin.template:
-    src: templates/snapshot.list.j2
+    src: snapshot.list.j2
     dest: /etc/apt/sources.list.d/00-ansible-snapshot.list
     owner: root
     group: root

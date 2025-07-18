@@ -30,7 +30,7 @@
 
 - name: Update /etc/hosts file
   template:
-    src: templates/hosts.j2
+    src: hosts.j2
     dest: /etc/hosts
     owner: root
     group: root

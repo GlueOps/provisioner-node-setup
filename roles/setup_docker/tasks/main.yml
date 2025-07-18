@@ -19,6 +19,9 @@
     state: present
     update_cache: no
 
+- name: Force apt-get update allowing expired snapshot metadata
+  command: apt-get update -o Acquire::Check-Valid-Until=false
+
 - name: "Install Docker packages"
   ansible.builtin.apt:
     name:
@@ -29,6 +32,3 @@
       - "docker-compose-plugin={{ docker_compose_version }}"
     state: present
     allow_downgrade: yes
-
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
