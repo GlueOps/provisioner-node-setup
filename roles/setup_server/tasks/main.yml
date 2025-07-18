@@ -1,5 +1,19 @@
 ---
 # tasks file for setup_server
+- name: Remove systemd-resolved
+  apt:
+    name: systemd-resolved
+    state: absent
+  ignore_errors: yes
+
+- name: Create dns configuration file
+  copy:
+    src: files/resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Force apt-get update allowing expired snapshot metadata
   command: apt-get update -o Acquire::Check-Valid-Until=false
 
