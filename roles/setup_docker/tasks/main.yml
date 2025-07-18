@@ -19,7 +19,7 @@
     state: present
     update_cache: no
 
-- name: "Install Docker and tailscale packages"
+- name: "Install Docker packages"
   ansible.builtin.apt:
     name:
       - "docker-ce={{ docker_version_string }}"
@@ -27,7 +27,6 @@
       - "containerd.io={{ docker_containerd_version }}"
       - "docker-buildx-plugin={{ docker_buildx_version }}"
       - "docker-compose-plugin={{ docker_compose_version }}"
-      - "tailscale"
     state: present
     allow_downgrade: yes
 

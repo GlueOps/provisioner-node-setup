@@ -28,6 +28,13 @@
 - name: Force apt-get update allowing expired snapshot metadata
   command: apt-get update -o Acquire::Check-Valid-Until=false
 
+- name: "Install Tailscale packages"
+  ansible.builtin.apt:
+    name:
+      - "tailscale"
+    state: present
+    allow_downgrade: yes
+
 - name: Start tailscale
   command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
   when: tailscale_auth_key is defined
