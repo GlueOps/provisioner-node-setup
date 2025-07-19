@@ -1,0 +1,102 @@
+---
+# tasks file for setup_server
+- name: Remove systemd-resolved
+  apt:
+    name: systemd-resolved
+    state: absent
+  ignore_errors: yes
+
+- name: Create dns configuration file
+  copy:
+    src: files/resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Force apt-get update allowing expired snapshot metadata
+  command: apt-get update -o Acquire::Check-Valid-Until=false
+
+- name: Install server dependencies
+  apt:
+    name: 
+      - jq
+      - htop
+      - curl
+      - tmux
+      - ca-certificates
+    state: present
+    allow_downgrade: yes
+
+- name: Set hostname if inventory_hostname is valid
+  set_fact:
+    hostname: "{{ inventory_hostname }}"
+  failed_when: not inventory_hostname or inventory_hostname | length == 0
+
+- name: Set timezone to UTC
+  timezone:
+    name: UTC
+
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}"
+    use: debian
+
+- name: Update /etc/hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy dnsmasq file
+  copy:
+    src: files/dnsmasq
+    dest: /etc/default/dnsmasq
+    owner: root
+    group: root
+    mode: 0644
+
+- name: create directory for htoprc
+  file:
+    path:  /root/.config/htop
+    state: directory
+
+- name: Create htoprc
+  copy:
+    src: files/htoprc
+    dest: /root/.config/htop/htoprc
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Modify sshd_config
+  copy:
+    src: files/sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart sshd service
+  service:
+    name: sshd
+    state: restarted
+
+- name: Remove all users except root
+  user:
+    name: "{{ item }}"
+    state: absent
+    remove: yes
+  loop:
+    - glueops
+    - admin
+    - debian
+
+- name: Add public key to authorized_keys
+  authorized_key:
+    user: root  
+    key: "{{ keys }}"
+    state: present
+    exclusive: true

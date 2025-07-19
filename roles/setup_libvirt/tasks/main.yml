@@ -1,0 +1,67 @@
+---
+# tasks file for setup_libvirt
+- name: Ensure /etc/sysconfig directory exists
+  ansible.builtin.file:
+    path: /etc/sysconfig
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Create libvirt-guests config file
+  copy:
+    src: files/libvirt-guests
+    dest: /etc/sysconfig/libvirt-guests
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Force apt-get update allowing expired snapshot metadata
+  command: apt-get update -o Acquire::Check-Valid-Until=false
+
+- name: Install libvirt and libvirt dependencies
+  apt:
+    name: 
+      - dnsmasq
+      - qemu-system-x86
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+      - virtinst
+      - qemu-utils
+      - libnss-libvirt
+    state: present
+    allow_downgrade: yes
+
+- name: Remove virt-manager if it exists
+  apt:
+    name: 
+      - virt-manager
+    state: absent
+
+- name: Enable and start libvirtd service
+  service:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: Check libvirt 'default' network state
+  command: virsh net-info default
+  register: net_info
+  changed_when: false
+  failed_when: false
+
+- name: Start the default libvirt network if it is not active
+  command: virsh net-start default
+  when: net_info.rc == 0 and net_info.stdout | regex_search('Active:\s+no')
+
+- name: Enable autostart for the default libvirt network
+  command: virsh net-autostart default
+
+- name: Modify nsswitch.conf
+  copy:
+    src: files/nsswitch.conf
+    dest: /etc/nsswitch.conf
+    owner: root
+    group: root
+    mode: 0644

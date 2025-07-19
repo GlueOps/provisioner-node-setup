@@ -1,0 +1,34 @@
+---
+# tasks file for setup_docker
+- name: Create keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: 0755
+
+- name: Add Docker GPG apt Key
+  get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: 0644
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
+    filename: docker
+    state: present
+    update_cache: no
+
+- name: Force apt-get update allowing expired snapshot metadata
+  command: apt-get update -o Acquire::Check-Valid-Until=false
+
+- name: "Install Docker packages"
+  ansible.builtin.apt:
+    name:
+      - "docker-ce={{ docker_version_string }}"
+      - "docker-ce-cli={{ docker_version_string }}"
+      - "containerd.io={{ docker_containerd_version }}"
+      - "docker-buildx-plugin={{ docker_buildx_version }}"
+      - "docker-compose-plugin={{ docker_compose_version }}"
+    state: present
+    allow_downgrade: yes
