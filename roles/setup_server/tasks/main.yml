@@ -24,7 +24,6 @@
       - ca-certificates
     state: present
     update_cache: yes
-    allow_downgrade: yes
 
 - name: Set hostname if inventory_hostname is valid
   set_fact:
