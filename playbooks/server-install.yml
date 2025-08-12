@@ -20,7 +20,6 @@
     ansible_port: "{{ discovered_ssh_port }}"
   roles:
     - setup_server
-    - configure_snapshots
     - setup_libvirt
     - setup_docker
     - setup_tailscale

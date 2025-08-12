@@ -1,5 +1,0 @@
----
-# handlers file for configure_snapshots
-- name: update apt cache
-  ansible.builtin.command: >
-    apt-get update -o Acquire::Check-Valid-Until=false
