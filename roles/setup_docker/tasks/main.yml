@@ -17,10 +17,6 @@
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_lsb.codename }} stable"
     filename: docker
     state: present
-    update_cache: no
-
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
 
 - name: "Install Docker packages"
   ansible.builtin.apt:
