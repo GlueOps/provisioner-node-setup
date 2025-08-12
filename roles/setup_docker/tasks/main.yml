@@ -21,10 +21,10 @@
 - name: "Install Docker packages"
   ansible.builtin.apt:
     name:
-      - "docker-ce={{ docker_version_string }}"
-      - "docker-ce-cli={{ docker_version_string }}"
-      - "containerd.io={{ docker_containerd_version }}"
-      - "docker-buildx-plugin={{ docker_buildx_version }}"
-      - "docker-compose-plugin={{ docker_compose_version }}"
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
     allow_downgrade: yes

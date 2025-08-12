@@ -1,8 +1,0 @@
----
-# vars file for setup_docker
-# https://download.docker.com/linux/debian/dists/bookworm/pool/stable/amd64/
-# Ensure the version is prefixed with "5:" for docker version only
-docker_version_string: "5:28.3.0-1~debian.12~bookworm"
-docker_buildx_version: "0.25.0-1~debian.12~bookworm"
-docker_compose_version: "2.37.3-1~debian.12~bookworm"
-docker_containerd_version: "1.7.27-1"
