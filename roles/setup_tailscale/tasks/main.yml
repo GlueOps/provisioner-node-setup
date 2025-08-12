@@ -23,17 +23,12 @@
     repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/tailscale-archive-keyring.gpg] https://pkgs.tailscale.com/stable/debian {{ ansible_lsb.codename }} main"
     filename: tailscale
     state: present
-    update_cache: no
-
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
 
 - name: "Install Tailscale packages"
   ansible.builtin.apt:
     name:
       - "tailscale"
     state: present
-    allow_downgrade: yes
 
 - name: Start tailscale
   command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
