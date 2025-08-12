@@ -25,4 +25,3 @@
     - setup_docker
     - setup_tailscale
     - setup_cache
-    - check_reboot
