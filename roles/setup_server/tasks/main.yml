@@ -1,5 +1,10 @@
 ---
 # tasks file for setup_server
+- name: Upgrade server packages
+  apt:
+    upgrade: safe
+    update_cache: yes
+
 - name: Remove systemd-resolved
   apt:
     name: systemd-resolved
