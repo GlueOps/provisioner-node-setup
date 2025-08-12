@@ -29,6 +29,7 @@
     name:
       - "tailscale"
     state: present
+    update_cache: yes
 
 - name: Start tailscale
   command: tailscale up --authkey {{ tailscale_auth_key }} --ssh
