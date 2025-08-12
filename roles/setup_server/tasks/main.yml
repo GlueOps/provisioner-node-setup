@@ -14,9 +14,6 @@
     group: root
     mode: 0644
 
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
-
 - name: Install server dependencies
   apt:
     name: 
@@ -26,6 +23,7 @@
       - tmux
       - ca-certificates
     state: present
+    update_cache: yes
     allow_downgrade: yes
 
 - name: Set hostname if inventory_hostname is valid
