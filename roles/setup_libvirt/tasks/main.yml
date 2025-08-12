@@ -7,9 +7,6 @@
     group: root
     mode: '0644'
 
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
-
 - name: Install libvirt and libvirt dependencies
   apt:
     name: 
@@ -22,7 +19,7 @@
       - qemu-utils
       - libnss-libvirt
     state: present
-    allow_downgrade: yes
+    update_cache: yes
 
 - name: Remove virt-manager if it exists
   apt:
