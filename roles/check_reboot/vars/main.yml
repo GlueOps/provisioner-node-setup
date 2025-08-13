@@ -1,4 +1,0 @@
----
-# vars file for check_reboot
-#SLACK_WEBHOOK_TOKEN=G922VJP24/D921DW937/3Ffe373sfhRE6y42Fg3rvf4GlK
-webhook_token: "{{ lookup('ansible.builtin.env', 'SLACK_WEBHOOK_TOKEN') }}"
