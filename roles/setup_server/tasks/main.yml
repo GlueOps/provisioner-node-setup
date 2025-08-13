@@ -1,5 +1,10 @@
 ---
 # tasks file for setup_server
+- name: Upgrade server packages
+  apt:
+    upgrade: safe
+    update_cache: yes
+
 - name: Remove systemd-resolved
   apt:
     name: systemd-resolved
@@ -14,9 +19,6 @@
     group: root
     mode: 0644
 
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
-
 - name: Install server dependencies
   apt:
     name: 
@@ -26,7 +28,7 @@
       - tmux
       - ca-certificates
     state: present
-    allow_downgrade: yes
+    update_cache: yes
 
 - name: Set hostname if inventory_hostname is valid
   set_fact:

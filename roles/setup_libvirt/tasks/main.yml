@@ -1,23 +1,11 @@
 ---
-# tasks file for setup_libvirt
-- name: Ensure /etc/sysconfig directory exists
-  ansible.builtin.file:
-    path: /etc/sysconfig
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-
 - name: Create libvirt-guests config file
   copy:
     src: files/libvirt-guests
-    dest: /etc/sysconfig/libvirt-guests
+    dest: /etc/default/libvirt-guests
     owner: root
     group: root
     mode: '0644'
-
-- name: Force apt-get update allowing expired snapshot metadata
-  command: apt-get update -o Acquire::Check-Valid-Until=false
 
 - name: Install libvirt and libvirt dependencies
   apt:
@@ -31,7 +19,7 @@
       - qemu-utils
       - libnss-libvirt
     state: present
-    allow_downgrade: yes
+    update_cache: yes
 
 - name: Remove virt-manager if it exists
   apt:
