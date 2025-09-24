@@ -70,8 +70,8 @@
       "resolved": "github:NixOS/nixpkgs/a1f79a1770d05af18111fbbe2a3ab2c42c0f6cd0?lastModified=1758446476&narHash=sha256-5rdAi7CTvM%2FkSs6fHe1bREIva5W3TbImsto%2BdxG4mBo%3D"
     },
     "sshpass@1.10": {
-      "last_modified": "2025-07-28T17:09:23Z",
-      "resolved": "github:NixOS/nixpkgs/648f70160c03151bc2121d179291337ad6bc564b#sshpass",
+      "last_modified": "2025-09-18T16:33:27Z",
+      "resolved": "github:NixOS/nixpkgs/f4b140d5b253f5e2a1ff4e5506edbf8267724bde#sshpass",
       "source": "devbox-search",
       "version": "1.10",
       "systems": {
@@ -79,41 +79,41 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/08xs47l5aif1jdlj4vzi2r1vz7rjvm32-sshpass-1.10",
+              "path": "/nix/store/8vk0mz29nly0y0fgc4sc34p0z0avjidd-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/08xs47l5aif1jdlj4vzi2r1vz7rjvm32-sshpass-1.10"
+          "store_path": "/nix/store/8vk0mz29nly0y0fgc4sc34p0z0avjidd-sshpass-1.10"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/rgzyv52zwvjk76ckyah6fy6mjc7g512z-sshpass-1.10",
+              "path": "/nix/store/6r3gz8ia0sbm00kygbb9b3xckjq8n6ai-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/rgzyv52zwvjk76ckyah6fy6mjc7g512z-sshpass-1.10"
+          "store_path": "/nix/store/6r3gz8ia0sbm00kygbb9b3xckjq8n6ai-sshpass-1.10"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/c5w5252d0c7y84rk7hkifd213fx7zbab-sshpass-1.10",
+              "path": "/nix/store/pf88mmmi4yc71729p3w4f60vgl1m5bc7-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/c5w5252d0c7y84rk7hkifd213fx7zbab-sshpass-1.10"
+          "store_path": "/nix/store/pf88mmmi4yc71729p3w4f60vgl1m5bc7-sshpass-1.10"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/6s6j1s4cl56s2zyjcn0wfcpfjsxh74cw-sshpass-1.10",
+              "path": "/nix/store/kjyygk6m764y50q5bagdz7z126pa9drf-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/6s6j1s4cl56s2zyjcn0wfcpfjsxh74cw-sshpass-1.10"
+          "store_path": "/nix/store/kjyygk6m764y50q5bagdz7z126pa9drf-sshpass-1.10"
         }
       }
     }
