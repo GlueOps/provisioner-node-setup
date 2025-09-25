@@ -41,7 +41,7 @@
 
 - name: Start the default libvirt network if it is not active
   command: virsh net-start default
-  when: net_info.rc == 0 and net_info.stdout | regex_search('Active:\s+no')
+  when: net_info.rc == 0 and net_info.stdout | regex_search('Active:\s+no') | bool
 
 - name: Enable autostart for the default libvirt network
   command: virsh net-autostart default
