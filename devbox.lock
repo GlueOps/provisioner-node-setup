@@ -2,8 +2,8 @@
   "lockfile_version": "1",
   "packages": {
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-09-03T14:58:13Z",
-      "resolved": "github:NixOS/nixpkgs/c6a788f552b7b7af703b1a29802a7233c0067908?lastModified=1756911493&narHash=sha256-6n%2Fn1GZQ%2Fvi%2BLhFXMSyoseKdNfc2QQaSBXJdgamrbkE%3D"
+      "last_modified": "2025-09-26T19:57:07Z",
+      "resolved": "github:NixOS/nixpkgs/53614373268559d054c080d070cfc732dbe68ac4?lastModified=1758916627&narHash=sha256-fB2ISCc%2Bxn%2B9hZ6gOsABxSBcsCgLCjbJ5bC6U9bPzQ4%3D"
     },
     "python313Packages.ansible-core@2.18.6": {
       "last_modified": "2025-07-17T10:11:59Z",
