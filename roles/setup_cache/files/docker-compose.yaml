@@ -1,6 +1,6 @@
 services:
   cache:
-    image: nginx:1.29.1@sha256:d5f28ef21aabddd098f3dbc21fe5b7a7d7a184720bc07da0b6c9b9820e97f25e
+    image: nginx:1.29.8@sha256:1881968aff6f7cdcc4b888c00a11f4ce241ad7ec957e0cb4a9e19e93a3ff87ea
     ports:
       - "127.0.0.1:1337:1337"
     volumes:
