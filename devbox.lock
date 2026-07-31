@@ -2,8 +2,8 @@
   "lockfile_version": "1",
   "packages": {
     "github:NixOS/nixpkgs/nixpkgs-unstable": {
-      "last_modified": "2025-09-03T14:58:13Z",
-      "resolved": "github:NixOS/nixpkgs/c6a788f552b7b7af703b1a29802a7233c0067908?lastModified=1756911493&narHash=sha256-6n%2Fn1GZQ%2Fvi%2BLhFXMSyoseKdNfc2QQaSBXJdgamrbkE%3D"
+      "last_modified": "2026-07-29T04:59:45Z",
+      "resolved": "github:NixOS/nixpkgs/9bc02893134c733dd85de46ee4fb2fac696b5529?lastModified=1785301185&narHash=sha256-eoS3KQTO0aPWXZvIaRbRAzSSHW3l5wdMFXtT1ISfoKA%3D"
     },
     "python313Packages.ansible-core@2.18.6": {
       "last_modified": "2025-07-17T10:11:59Z",
@@ -70,8 +70,8 @@
       }
     },
     "sshpass@1.10": {
-      "last_modified": "2025-09-18T16:33:27Z",
-      "resolved": "github:NixOS/nixpkgs/f4b140d5b253f5e2a1ff4e5506edbf8267724bde#sshpass",
+      "last_modified": "2026-07-23T05:10:05Z",
+      "resolved": "github:NixOS/nixpkgs/7525d999cd850b9a488817abc89c75dc733acf17#sshpass",
       "source": "devbox-search",
       "version": "1.10",
       "systems": {
@@ -79,41 +79,41 @@
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/8vk0mz29nly0y0fgc4sc34p0z0avjidd-sshpass-1.10",
+              "path": "/nix/store/x9082pmpnvxwa70q60a584qclb9v738z-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/8vk0mz29nly0y0fgc4sc34p0z0avjidd-sshpass-1.10"
+          "store_path": "/nix/store/x9082pmpnvxwa70q60a584qclb9v738z-sshpass-1.10"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/6r3gz8ia0sbm00kygbb9b3xckjq8n6ai-sshpass-1.10",
+              "path": "/nix/store/vrxfba5pbyv563g2p2s3m2hnd7lmynm3-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/6r3gz8ia0sbm00kygbb9b3xckjq8n6ai-sshpass-1.10"
+          "store_path": "/nix/store/vrxfba5pbyv563g2p2s3m2hnd7lmynm3-sshpass-1.10"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/pf88mmmi4yc71729p3w4f60vgl1m5bc7-sshpass-1.10",
+              "path": "/nix/store/30kr31149dx8mcnwnnav03i4fjaw0d09-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/pf88mmmi4yc71729p3w4f60vgl1m5bc7-sshpass-1.10"
+          "store_path": "/nix/store/30kr31149dx8mcnwnnav03i4fjaw0d09-sshpass-1.10"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/kjyygk6m764y50q5bagdz7z126pa9drf-sshpass-1.10",
+              "path": "/nix/store/nfp9szbrkyn31y0ly16ma7af0f2hanwp-sshpass-1.10",
               "default": true
             }
           ],
-          "store_path": "/nix/store/kjyygk6m764y50q5bagdz7z126pa9drf-sshpass-1.10"
+          "store_path": "/nix/store/nfp9szbrkyn31y0ly16ma7af0f2hanwp-sshpass-1.10"
         }
       }
     }
